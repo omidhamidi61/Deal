@@ -1,0 +1,106 @@
+body{
+  color: blue;
+}
+.one{
+  color: white;
+  margin: 10px;
+}
+.two{
+  color: red;
+  margin: 10px;
+}
+.progress{
+  width: 100%;
+  background-color: #ddd;
+}
+.strip{
+  background-color: blue;
+  height: 100px;
+  width: 800px;
+  border: 5px dotted black;
+}
+.callsing{
+  color: white;
+padding-left: 40px;
+padding-top:10px;
+font-size: 30px;
+}
+.type{
+  color: white;
+  padding-left: 100px;
+  padding-top:-20px;
+  font-size: 10px;
+}
+.des{
+  color: white;
+  padding-left: 10px;
+  padding-top:2px;
+  font-size: 10px;
+}
+/* .vl{
+  background-color: red;
+  width: 5px;
+  height: 100px;
+  margin-left: 150px;
+} */
+.EOBT{
+  color: white;
+padding-left: 40px;
+padding-top:10px;
+font-size: 30px;
+}
+.first-text {
+  font-size: 4.4rem;
+  position: absolute;
+  left: 2.5rem;
+  top: 5rem;
+  opacity: 0;
+  animation-name: topFadeOut;
+  animation-duration: 5s;
+  color: blue;
+}
+
+@keyframes topFadeOut {
+  0% {
+    position: absolute;
+    top: -3rem;
+    opacity: 0;
+  }
+
+  75% {
+    position: absolute;
+    top: 25%;
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+#myBar{
+  margin: auto;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 4s;
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  0%   {background-color:red; left:0px; top:0px;}
+  25%  {background-color:yellow; left:200px; top:0px;}
+  50%  {background-color:blue; left:200px; top:200px;}
+  75%  {background-color:green; left:0px; top:200px;}
+  100% {background-color:rgba(0,0,0,0); left:0px; top:0px;}
+}
+
+/* Standard syntax */
+@keyframes example {
+  0%   {background-color:red; left:0px; top:0px;}
+  25%  {background-color:yellow; left:200px; top:0px;}
+  50%  {background-color:blue; left:200px; top:200px;}
+  75%  {background-color:green; left:0px; top:200px;}
+  100% {background-color:rgba(0,0,0,0); left:0px; top:0px;}
+}

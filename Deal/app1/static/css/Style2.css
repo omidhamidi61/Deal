@@ -1,0 +1,212 @@
+html{
+  background-color: #FFF;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #FFF;
+}
+.msg{
+  width: 100px;
+  height:100px;
+  background-color:green;
+}
+.header-up {
+  width: 100%;
+  height: 50px;
+}
+
+.popup-co {
+  margin: 0 auto;
+  width: 100%;
+  height: 300px;
+  background-color: #FFF;
+  z-index: 2;
+
+}
+
+.popup-data {
+  width: 600px;
+  height: 200px;
+  background-color: #ced4da;
+  margin: 0 auto;
+  align-items: center;
+  padding: 20px;
+  border-radius: 30px;
+  margin-top: 10px;
+}
+.popup-data input {
+  width: 80%;
+  margin: 0 auto;
+}
+.popup-data label,button {
+  margin: 0 auto;
+}
+
+
+
+/**********flight form style ******/
+.flight-form {
+  width: 80%;
+  height: 300px;
+  margin: 0 auto;;
+  padding-top: 50px;
+}
+/* loading */
+
+.first-text{
+  margin: auto;
+  font-size: 2rem;
+  position: absolute;
+  left:45%;
+  top: 5rem;
+  opacity: 0;
+  animation-name: topFadeOut;
+  animation-duration: 3s;
+  color: gray;
+  z-index: 1021;
+}
+
+@keyframes topFadeOut {
+  0% {
+    position: absolute;
+    top: 25%;
+    opacity: 0;
+  }
+
+  50% {
+    position: absolute;
+    top: 25%;
+    opacity: .5;
+  }
+  75% {
+    position: absolute;
+    top: 25%;
+    opacity: 1;
+  }
+
+  100% {
+    top:25%;
+    opacity: 0;
+  }
+}
+/* end of loading */
+/*************************************** start upload style ********************/
+
+
+.file-upload {
+  background-color: #ffffff;
+  width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.file-upload-btn {
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  background: #1FB264;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #15824B;
+  transition: all .2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.file-upload-btn:hover {
+  background: #1AA059;
+  color: #ffffff;
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+.file-upload-btn:active {
+  border: 0;
+  transition: all .2s ease;
+}
+
+.file-upload-content {
+  display: none;
+  text-align: center;
+}
+
+.file-upload-input {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.image-upload-wrap {
+  margin-top: 20px;
+  border: 4px dashed #1FB264;
+  position: relative;
+}
+
+.image-dropping,
+.image-upload-wrap:hover {
+  background-color: #1FB264;
+  border: 4px dashed #ffffff;
+}
+
+.image-title-wrap {
+  padding: 0 15px 15px 15px;
+  color: #222;
+}
+
+.drag-text {
+  text-align: center;
+}
+
+.drag-text h3 {
+  font-weight: 100;
+  text-transform: uppercase;
+  color: #15824B;
+  padding: 60px 0;
+}
+
+.file-upload-image {
+  max-height: 200px;
+  max-width: 200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.remove-image {
+  width: 200px;
+  margin: 0;
+  color: #fff;
+  background: #cd4535;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #b02818;
+  transition: all .2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.remove-image:hover {
+  background: #c13b2a;
+  color: #ffffff;
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+.remove-image:active {
+  border: 0;
+  transition: all .2s ease;
+}
+
+/*************** end upload style ***********************/
+.flight-list-hover:hover {
+  cursor: pointer;
+}

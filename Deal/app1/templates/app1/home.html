@@ -1,0 +1,35 @@
+﻿{% extends 'app1/base.html' %}
+{%block main%}
+   </br></br>
+    
+  <form method="post">
+      {% csrf_token %}
+      <label for="id_workerslist1" style="font:bold">Select Receiver</label>
+        <select id="id_Receivers" name="ReceiversList">
+        <option selected disabled></option>
+            {% for a in n1%}
+            <option>{{a}}</option>
+                {%endfor%}
+        </select>
+      </br>
+      <table>
+          <tr>
+              <th><h4>Title</h4></th>
+              <th><h4>Content</h4></th>
+          </tr>
+          <tbody>
+              <tr>
+              <td><input id="Id_MessageTitle" name="MessageTitle"/></td>
+              <td><textarea cols="70" rows="10" id="Id_MessageContent" name="MessageContent"></textarea></td>
+              </tr>
+          </tbody>
+      </table>
+          <button id="Id_SendMessageBtn" type="submit" name="SendMessageBtn">Send Message</button>
+    </form>
+    <script>
+        $("#home_id").addClass("active");
+        $("#p2_id").fadeOut(0);
+        $("#p2_id").fadeIn(3000);
+    </script>
+{% endblock %}
+ 

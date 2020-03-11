@@ -1,0 +1,138 @@
+﻿{% extends 'app1/base.html'%}
+{% load static %}
+ <title>{{worker}}-Outbox</title>
+{% block outbox %}    
+<div class="container">
+        <div class="row">
+            <div class="col-xl-6">
+                <h1> Outbox </h1>
+            </div>
+            <div class="col-xl-6">
+                <h2>Contents</h2>
+            </div>
+        </div>
+    </div>
+    
+    </br</br></br></br>
+    <style>
+        table, td, th { border: 1px solid black; }
+        table {
+            height:390px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr {
+            height:unset;
+        }
+        td {
+            font-family:Consolas; 
+            font-size:x-large;
+        }
+        th, td {
+            border-bottom: 1px solid #ddd;
+        }
+        tr:nth-child(even) {background-color:papayawhip;}
+        tr:hover {background-color:aquamarine;}
+        
+
+    </style>
+    <div class="container col-lg-12">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="cutlist">
+                    <table style="text-align:center" class="table table-warning" id="mestable">
+                        <thead>
+                        <tr>
+                            <th style="width:30% ; font-family:'Times New Roman'; font-size:x-large"> Receivers </th>
+                            <th style="width:50% ; font-family:'Times New Roman'; font-size:x-large"> Title </th>
+                            <th style="width:20% ; font-family:'Times New Roman'; font-size:x-large"> Dealers </th>
+                        </tr>
+                            </thead>
+
+                        <tbody id="Tbody_id" style="border:thin 1px black;">
+                            {% for z in outbox %}
+                                <tr style="cursor:pointer">
+                                    <td id="ID_id" hidden>{{z.id}}</td>    
+                                    <td id="receiver_id" style="font-family:'Courier New'; 
+                                        font:bolder; font-style:oblique; font-size:large;">
+                                        <h5 id="R_id">{{z.receiver}}</h5>
+                                    </td>
+                                    <td><h6 id="T_id">{{z.title}}</h6></td>
+                                    <td id="isAccepted_id">
+                                        {% if z.isAccepted %} <h5 style="color:indianred">YES</h5>  
+                                        {% else %} <h5 style="color:lawngreen">NO</h5>
+                                        {% endif %}
+                                        </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+       
+            <div class="col-lg-6">
+                <textarea  cols="90" rows="16" id="Textarea_id"></textarea>
+                </br></br></br></br></br>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    $("#mestable tbody tr #R_id").on('click', function () {
+        var reci = $(this).text().trim();
+        if (confirm("Do you want to see all the messages sent to " + reci + " ?"))
+        {
+            $.ajax({
+                type: 'get',
+                url: '../ajcheckreceivermails',
+                data: {'reci':reci},
+                dataType: 'json',
+                success: function (data) {
+                    var receivermails = JSON.parse(data.datareceiver);
+                    $("#Tbody_id").empty();
+                    for (i = 0; i < receivermails.length; i++) {
+                        var st0 = '<td id="ID_id" hidden>' + receivermails[i].pk + '</td> ';
+                        var st1 = '<td id="receiver_id" style="font-family:\'Courier New\';' +
+                            'font:bolder; font-style:oblique; font-size:large;">' +
+                            '<h5 id="R_id">' + reci + '</h5></td>';
+                        var st2 = '<td id="title_id"><h6>' + receivermails[i].fields.title + ' </h6></td>';
+                        $("#mestable tbody").append('<tr id ="Row_id" style="cursor:pointer">' + st0 + st1 + st2 + '</tr>');
+                    }
+                    $("#mestable tbody tr").on('click', function () {
+                        var idid = $(this).children("#ID_id").text();
+                        $.ajax({
+                            url: '../ajshowcontent',
+                            data: { 'idid': idid },
+                            dataType: 'json',
+                            success: function (data) {
+                                $("#Textarea_id").text(data.contnt);
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    });
+    
+    $("#mestable tbody tr").on('click', function () {
+        var idid = $(this).children("#ID_id").text();
+        $.ajax({
+            url: '../ajshowcontent',
+            data: { 'idid': idid },
+            dataType: 'json',
+            success: function (data)
+            { 
+                $("#Textarea_id").text(data.contnt);
+            }
+        });
+    });
+
+        $("#outbox_id").addClass("active");
+
+</script>
+{% endblock %}

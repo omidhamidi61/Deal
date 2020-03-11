@@ -1,0 +1,73 @@
+﻿{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.5/css/mdb.min.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/Style.css' %}">
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <br/>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      
+            
+            <a class="navbar-brand" href="#">
+                <h4 id="p2_id" style="color:blue; font-family:'B Koodak'">  {{worker.name}}</h4>
+            </a>
+        
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse bg-light" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li id="home_id" class="nav-item">
+            <a class="nav-link" href="{% url 'app1:home'%}">Home</a>
+          </li>
+            <li id="outbox_id" class="nav-item">
+            <a class="nav-link" href="{% url 'app1:outbox'%}">Outbox</a>
+          </li>
+          <li id="inbox_id" class="nav-item">
+            <a class="nav-link" href="{% url 'app1:inbox'%}">Inbox</a>
+          </li>
+          <li id="unread_id" class="nav-item">
+            <a class="nav-link" href="{% url 'app1:unreadmessages'%}">{{unreadcount}} Unread Messages</a>
+          </li>
+        </ul>
+          {#<h5 class="nav-item" id="p1_id" style="float: left; color:lightgreen; font-family:'Times New Roman'">Welcome  </h5>#}
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search">
+          <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    
+</body>
+{%block main%}{% endblock %}
+{%block outbox%}{%endblock%}
+{%block inbox%}{%endblock%}
+{%block unread%}{%endblock%}
+
+</html>
+
+<script>
+    src="{% static 'js/jquerylast.min.js' %}" 
+            type="text/javascript" language="javascript">
+    $("#p2_id").fadeIn(2000);
+</script>
+
+

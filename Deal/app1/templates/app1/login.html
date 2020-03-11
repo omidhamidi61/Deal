@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>LOGIN</title>
+</head>
+
+<body>
+
+     LOGIN PAGE
+    <br />
+    <form method="post" class="form-inline" id="form_id">
+        {% csrf_token %}
+        <label for="id_workers" style="font:bold">Select User</label>
+        <select id="id_workers" name="SelectedWorker">
+        <option selected disabled></option>
+            {% for a in n%}
+            <option>{{a}}</option>
+                {%endfor%}
+        </select>
+        <br />
+        <input type="text" id="id_txt1" />
+        </form>
+        <input type="password" id="id_txt2" />
+        <button name="btn1" id="btn1" disabled onclick="location.href = {% url 'app1:home'%};">Login</button>
+        
+
+<script src="{% static 'js/jquerylast.min.js' %}" 
+            type="text/javascript" language="javascript"></script>
+
+    <script>
+        $("#id_workers").change(function () {
+            var t = $(this).val();
+            $.ajax({
+                url: '../ajcheckusername',
+                data: { "workerfullname": t },
+                dataType: 'json',
+                success: function (data) { $("#id_txt1").attr("value", data.usr); }
+            });
+        });
+
+        $("#id_txt2").change(function () {
+            var t1 = $("#id_txt1").val();
+            var t2 = $("#id_txt2").val();
+            $.ajax({
+                url: '../ajcheckpassword',
+                data: { "user": t1, "pss": t2 },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.res) { $("#btn1").prop('disabled', false); } else { alert("Try Again") };
+                }
+            });
+        });
+    </script>
+</body>
+</html>
