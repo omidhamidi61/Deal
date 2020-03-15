@@ -6,7 +6,7 @@
       {% csrf_token %}
       <label for="id_workerslist1" style="font:bold">Select Receiver</label>
         <select id="id_Receivers" name="ReceiversList">
-        <option selected disabled></option>
+        <option selected disabled>EveryOne</option>
             {% for a in n1%}
             <option>{{a}}</option>
                 {%endfor%}

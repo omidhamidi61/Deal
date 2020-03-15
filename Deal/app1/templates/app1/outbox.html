@@ -54,6 +54,7 @@
                             </thead>
 
                         <tbody id="Tbody_id" style="border:thin 1px black;">
+                            
                             {% for z in outbox %}
                                 <tr style="cursor:pointer">
                                     <td id="ID_id" hidden>{{z.id}}</td>    
@@ -63,8 +64,8 @@
                                     </td>
                                     <td><h6 id="T_id">{{z.title}}</h6></td>
                                     <td id="isAccepted_id">
-                                        {% if z.isAccepted %} <h5 style="color:indianred">YES</h5>  
-                                        {% else %} <h5 style="color:lawngreen">NO</h5>
+                                        {% if z.isAccepted %} <h5 style="color:lawngreen">YES</h5>  
+                                        {% else %} <h5 style="color:indianred">NO</h5>
                                         {% endif %}
                                         </td>
                                 </tr>

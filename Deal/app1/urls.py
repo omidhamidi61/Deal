@@ -14,4 +14,6 @@ urlpatterns = [
     url('ajchecksendermails', views.checksendermails, name = 'checksendermails'),
     url('ajcheckreceivermails', views.checkreceivermails, name = 'ajcheckreceivermails'),
     url('ajshowcontent/',views.showcontent, name = 'showcontent'),
+    url('ajdeal/',views.deal, name = 'ajdeal'),
+    
     ]

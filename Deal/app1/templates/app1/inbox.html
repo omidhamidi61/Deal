@@ -70,7 +70,11 @@
                                         {% else %} <h5 style="color:lawngreen">NO</h5>
                                         {% endif %}
                                         </td>
-                                    <td><input type="checkbox" value="Approved"/> </td>
+                                    <td>
+                                        {% if z.isAccepted %} <h5 style="color:indianred">You Dealt</h5>
+                                        {% else %}<input id="deal_id" type="checkbox" value="Approved"/>
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -105,7 +109,15 @@
                             'font:bolder; font-style:oblique; font-size:large;">' +
                             '<h5 id="S_id">' + send + '</h5></td>';
                         var st2 = '<td id="title_id"><h6>' + sendermails[i].fields.title + ' </h6></td>';
-                        $("#mestable tbody").append('<tr id ="Row_id" style="cursor:pointer">' + st0 + st1 + st2 + '</tr>');
+                        if (sendermails[i].fields.isAccepted) {
+                            var st3 = '<td id="isAccepted_id"><h5 style="color:indianred">YES</h5></td>';
+                            var st4 = '<td><h5 style="color:indianred">You Dealt</h5></td>';
+                        }
+                        else {
+                            var st3 = '<td id="isAccepted_id"><h5 style="color:lawngreen">NO</h5></td>';
+                            var st4 = '<td><input id="deal_id" type="checkbox" value="Approved"/></td>'
+                        }
+                        $("#mestable tbody").append('<tr id ="Row_id" style="cursor:pointer">' + st0 + st1 + st2 + st3 + st4 + '</tr>');
                     }
                     $("#mestable tbody tr").on('click', function () {
                         var idid = $(this).children("#ID_id").text();
@@ -117,6 +129,31 @@
                                 $("#Textarea_id").text(data.contnt);
                             }
                         });
+                    });
+                    $('input[type=checkbox]').on('click', function () {
+                        var tr = $(this).closest('tr');
+                        var tri = tr.index();
+                        if ($(this).is(':checked')) {
+                            var idid = tr.children("#ID_id").text();
+                            if (confirm("Do you want to accept this request ?")) {
+                                $.ajax({
+                                    url: '../ajdeal',
+                                    data: { 'idid': idid, 'tr': tri },
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        if (data.status) {
+                                            $('#mestable tbody tr:eq(' + data.tr + ') #isAccepted_id').empty();
+                                            $('#mestable tbody tr:eq(' + data.tr + ') #isAccepted_id').append('<h5 style="color:indianred">YES</br>You Just Accepted</h5>');
+                                            $('#mestable tbody tr:eq(' + data.tr + ') #deal_id').addClass('disabled');
+                                        }
+                                        else {
+                                            alert('Problem with server, Try again !');
+                                            $('#mestable tbody tr:eq(' + data.tr + ') #deal_id').attr('checked', false);
+                                        }
+                                    }
+                                });
+                            }
+                        }
                     });
                 }
             });
@@ -136,6 +173,31 @@
         });
     });
 
+    $('input[type=checkbox]').on('click', function () {
+        var tr = $(this).closest('tr');
+        var tri = tr.index();
+        if ($(this).is(':checked')) {
+            var idid = tr.children("#ID_id").text();
+            if (confirm("Do you want to accept this request ?")) {
+                $.ajax({
+                    url: '../ajdeal',
+                    data: { 'idid': idid, 'tr': tri },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status) {
+                            $('#mestable tbody tr:eq(' + data.tr + ') #isAccepted_id').empty();
+                            $('#mestable tbody tr:eq(' + data.tr + ') #isAccepted_id').append('<h5 style="color:indianred">YES</br>You Just Accepted</h5>');
+                            $('#mestable tbody tr:eq(' + data.tr + ') #deal_id').addClass('disabled');
+                        }
+                        else {
+                            alert('Problem with server, Try again !');
+                            $('#mestable tbody tr:eq(' + data.tr + ') #deal_id').attr('checked', false);
+                        }
+                    }
+                });
+            }
+        }
+    });
         $("#inbox_id").addClass("active");
 
 </script>

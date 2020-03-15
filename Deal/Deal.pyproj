@@ -31,9 +31,11 @@
   <ItemGroup>
     <Compile Include="app1\admin.py" />
     <Compile Include="app1\apps.py" />
+    <Compile Include="app1\forms.py" />
     <Compile Include="app1\migrations\__init__.py" />
     <Compile Include="app1\models.py" />
     <Compile Include="app1\tests.py" />
+    <Compile Include="app1\urls.py" />
     <Compile Include="app1\views.py" />
     <Compile Include="app1\__init__.py" />
     <Compile Include="manage.py" />
@@ -43,7 +45,12 @@
     <Compile Include="Deal\wsgi.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app1\templates\app1\index.html" />
+    <Content Include="app1\templates\app1\base.html" />
+    <Content Include="app1\templates\app1\home.html" />
+    <Content Include="app1\templates\app1\inbox.html" />
+    <Content Include="app1\templates\app1\login.html" />
+    <Content Include="app1\templates\app1\outbox.html" />
+    <Content Include="app1\templates\app1\unreadmessages.html" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -16,11 +16,13 @@ class MessagesTable(models.Model):
     content = models.TextField(max_length = None)
     isUnread = models.BooleanField(null = False)
     isAccepted = models.BooleanField(null = False)
-    
+    dealers = models.ManyToManyField(WorkersTable, related_name='workersTable2')
+
 class TeamMembersTable(models.Model):
-    member = models.ForeignKey(WorkersTable,related_name='workersTable2',on_delete = models.CASCADE)
+    member = models.ForeignKey(WorkersTable, related_name='workersTable3', on_delete = models.CASCADE , null = True)
     teamnumber = models.IntegerField(null = False)
     supervisor = models.ForeignKey(WorkersTable,related_name='TeamMembersTable',on_delete = models.CASCADE)
     isRated = models.BooleanField(null = False)
     isSupervisor = models.BooleanField(null = False)
 
+    
