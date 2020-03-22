@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class WorkersTable(models.Model):
@@ -16,7 +17,10 @@ class MessagesTable(models.Model):
     content = models.TextField(max_length = None)
     isUnread = models.BooleanField(null = False)
     isAccepted = models.BooleanField(null = False)
-    dealers = models.ManyToManyField(WorkersTable, related_name='workersTable2')
+    dealers = models.ManyToManyField(WorkersTable)
+    datetime = models.DateTimeField(default = timezone.now)
+    comment = models.TextField(max_length = None, null = True)
+
 
 class TeamMembersTable(models.Model):
     member = models.ForeignKey(WorkersTable, related_name='workersTable3', on_delete = models.CASCADE , null = True)

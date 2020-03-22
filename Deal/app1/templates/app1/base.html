@@ -1,6 +1,5 @@
 ﻿{% load static %}
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
@@ -19,21 +18,17 @@
     <link rel="stylesheet" href="{% static 'css/Style.css' %}">
     <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet" />
     <meta charset="utf-8" />
-    <br/>
 </head>
-<body>
+<body style="background-color:lightgrey">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      
-            
-            <a class="navbar-brand" href="#">
-                <h4 id="p2_id" style="color:blue; font-family:'B Koodak'">  {{worker.name}}</h4>
+            <a id="p1_id" class="navbar-brand" href="#">
+                <h4 id="p2_id" style="color:blue; font-family:'B Koodak'; height:20px">{{worker.name}}</h4>
             </a>
-        
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse bg-light" id="navbarTogglerDemo02">
+      <div class="collapse navbar-collapse" style="background-color:cornsilk" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li id="home_id" class="nav-item">
             <a class="nav-link" href="{% url 'app1:home'%}">Home</a>
@@ -67,7 +62,25 @@
 <script>
     src="{% static 'js/jquerylast.min.js' %}" 
             type="text/javascript" language="javascript">
-    $("#p2_id").fadeIn(2000);
 </script>
+<script>
+        $("#p2_id").on('click', function () {
+            if (confirm("Are you sure you want to log out?")) {
+                $.ajax({
+                    url: '../ajlogout',
+                    success: function (data) {
+                        if (data.status) {
+                            $("#p1_id").attr('href','../login/');
+                        }
+                        else {
+                            alert("Failed to log out. Try again");
+                            $("#p1_id").attr('href','');
+                        }
+                    }
+                });
+            }
+        });
+</script>
+    
 
 

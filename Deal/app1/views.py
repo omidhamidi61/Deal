@@ -7,6 +7,7 @@ from app1.forms import WorkersForm, MessagesForm
 from django.http import JsonResponse,HttpResponse
 from django.core import serializers
 from django.forms.models import model_to_dict
+from django.db.models import Count
 
 # Create your views here.
 allnames = TeamMembersTable.objects.all()
@@ -14,6 +15,7 @@ mainworker = None
 inbox = None
 outbox = None
 unread = None
+idid = None
 
 def checkusername(request):
     ajax1 = request.GET.get('workerfullname')
@@ -78,8 +80,9 @@ def inbox(request):
 
 def outbox(request):
     outbox = MessagesTable.objects.filter(sender = mainworker)
-   
-    return render (request,"app1/outbox.html",{'outbox':outbox , 'worker':mainworker})
+    unread = MessagesTable.objects.filter(receiver = mainworker, isUnread = True)
+    qry =MessagesTable.objects.filter(sender = mainworker).aggregate(Count('title'))
+    return render (request,"app1/outbox.html",{'outbox':outbox , 'worker':mainworker , 'unreadcount':unread.count()})
 
 def checksendermails(request):
     sen = request.GET.get('send')
@@ -102,23 +105,50 @@ def unreadmessages(request):
     return render (request,"app1/unreadmessages.html",{'unreadmessages':unread , 'mainworker':mainworker , 'unreadcount':unread.count() , 'worker':mainworker})
 
 def showcontent(request):
+    global idid
     idid = request.GET.get('idid')
     msg = MessagesTable.objects.get(id = idid)
     msg.isUnread=False
     msg.save()
-    data = {'contnt':msg.content}
+    data = {'contnt':msg.content, 'commnt':msg.comment, 'rec':msg.receiver.name}
     return JsonResponse(data)
 
 def deal(request):
     try:
         idid = request.GET.get('idid')
-        print(idid)
         tr = request.GET.get('tr')
-        print(tr)
         msg = MessagesTable.objects.get(id = idid)
         msg.isAccepted=True
         msg.save()
         data = {'status': True , 'tr':tr}
     except:
         data = {'status':False , 'tr':tr}
+    return JsonResponse(data)
+
+def logout(request):
+    try:
+        mainworker = None
+        print(mainworker)
+        data = {'status':True}
+    except:
+        data = {'status':False}
+    return JsonResponse(data)
+    
+def sendcomm(request):
+    try:
+        comm = request.GET.get('comm')
+        msg = MessagesTable.objects.get(id = idid)
+        msg.comment = comm 
+        msg.save()
+        data = {'status':True}
+    except:
+        data = {'status':False}
+    return JsonResponse(data)
+
+def getcomm(request):
+    try:
+        msg = MessagesTable.objects.get(id = idid)
+        data = {'status':True, 'commnt':msg.comment}
+    except:
+        data = {'status':False}
     return JsonResponse(data)

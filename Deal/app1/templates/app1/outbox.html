@@ -64,7 +64,7 @@
                                     </td>
                                     <td><h6 id="T_id">{{z.title}}</h6></td>
                                     <td id="isAccepted_id">
-                                        {% if z.isAccepted %} <h5 style="color:lawngreen">YES</h5>  
+                                        {% if z.isAccepted %} <h5 style="color:limegreen">YES</h5>  
                                         {% else %} <h5 style="color:indianred">NO</h5>
                                         {% endif %}
                                         </td>
@@ -112,6 +112,7 @@
                             dataType: 'json',
                             success: function (data) {
                                 $("#Textarea_id").text(data.contnt);
+                                if (data.commnt != null) $("#Textarea_id").append('\n\n  ' + data.rec +' Said :\n' + data.commnt);
                             }
                         });
                     });
@@ -129,6 +130,7 @@
             success: function (data)
             { 
                 $("#Textarea_id").text(data.contnt);
+                if (data.commnt != null) $("#Textarea_id").append('\n\n  ' + data.rec +' Said :\n' + data.commnt);
             }
         });
     });

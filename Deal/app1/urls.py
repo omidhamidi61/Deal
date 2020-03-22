@@ -9,11 +9,13 @@ urlpatterns = [
     url('home/',views.home,name = 'home'),
     url('inbox/', views.inbox,name = "inbox"),
     url('outbox/', views.outbox,name = "outbox"),
-    
     url('unreadmessages/', views.unreadmessages,name = 'unreadmessages'),
+    
     url('ajchecksendermails', views.checksendermails, name = 'checksendermails'),
     url('ajcheckreceivermails', views.checkreceivermails, name = 'ajcheckreceivermails'),
-    url('ajshowcontent/',views.showcontent, name = 'showcontent'),
-    url('ajdeal/',views.deal, name = 'ajdeal'),
-    
+    url('ajshowcontent',views.showcontent, name = 'showcontent'),
+    url('ajdeal',views.deal, name = 'ajdeal'),
+    url('ajlogout',views.logout, name = 'ajlogout'),
+    url('ajsendcomm',views.sendcomm, name = 'ajsendcomm'),
+    url('ajgetcomm',views.getcomm, name = 'ajgetcomm'),
     ]

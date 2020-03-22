@@ -35,7 +35,7 @@
         th, td {
             border-bottom: 1px solid #ddd;
         }
-        tr:nth-child(even) {background-color:papayawhip;}
+        tr:nth-child(even) {background-color:cadetblue;}
         tr:hover {background-color:aquamarine;}
         
 
@@ -65,7 +65,7 @@
                                     <td><h6 id="T_id">{{z.title}}</h6></td>
                                     <td id="isAccepted_id">
                                         {% if z.isAccepted %} <h5 style="color:indianred">YES</h5>  
-                                        {% else %} <h5 style="color:lawngreen">NO</h5>
+                                        {% else %} <h5 style="color:limegreen">NO</h5>
                                         {% endif %}
                                         </td>
                                     <td><input id="deal_id" type="checkbox" value="Approved"/> </td>
@@ -109,7 +109,7 @@
                             var st4 = '<td><h5 style="color:indianred">You Dealt</h5></td>';
                         }
                         else {
-                            var st3 = '<td id="isAccepted_id"><h5 style="color:lawngreen">NO</h5></td>';
+                            var st3 = '<td id="isAccepted_id"><h5 style="color:limegreen">NO</h5></td>';
                             var st4 = '<td><input id="deal_id" type="checkbox" value="Approved"/></td>'
                         }
                         $("#mestable tbody").append('<tr id ="Row_id" style="cursor:pointer">' + st0 + st1 + st2 + st3 + st4 + '</tr>');
