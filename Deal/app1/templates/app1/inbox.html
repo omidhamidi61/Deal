@@ -217,31 +217,64 @@
 
     function SendComm() {
         var comm = $("#Comment_id").val();
-        $("#Comment_id").text("");
         if (comm != "") {
             $.ajax({
                 url: '../ajsendcomm',
                 data: { 'comm': comm },
                 dataType: 'json',
                 success: function (data) {
-                    if (!data.status) if (confirm('Problem with Server.. Try Again??')) SendComm();
+                    if (!data.status) {
+                        if (confirm('Problem with Server.. Try Again??')) SendComm();
+                    }
+                    else {
+                        $("#Comment_id").text("");
+                        $("#Textarea_id").text("");
+                        $("#Textarea_id").append(data.contnt);
+                        $("#Textarea_id").append('\n\n    You Said :\n');
+                        $("#Textarea_id").append(comm);
+                    }
                 }
             });
-            $("#Textarea_id").append('\n\n    You Said :\n');
-            $("#Textarea_id").append(comm);
+            
         }
     }
     function EditComm() {
         $("#Comment_id").focus();
-            $.ajax({
-                url: '../ajgetcomm',
-                data: {},
-                dataType: 'json',
-                success: function (data) {
-                    if (!data.status) if (confirm('Problem with Server.. Try Again??')) EditComm();
-                    if (data.commnt != null) $("#Comment_id").text(data.commnt);
+        $.ajax({
+            url: '../ajgetcomm',
+            data: {},
+            dataType: 'json',
+            success: function (data) {
+                if (!data.status) {
+                    if (confirm('Problem with Server.. Try Again??')) EditComm();
                 }
-            });
+                else if (data.commnt == null) {
+                    $("#Textarea_id").text("");
+                    $("#Textarea_id").append(data.contnt);
+                }
+                else {
+                    $("#Textarea_id").text("");
+                    $("#Textarea_id").append(data.contnt);
+                    $("#Textarea_id").append('\n\n    You Said :\n');
+                    $("#Textarea_id").append(comm);
+                }
+            }
+        });
+    }
+    function AbortComm() {
+        $("#Comment_id").focus();
+        $.ajax({
+            url: '../ajdelcomm',
+            data: {},
+            dataType: 'json',
+            success: function (data) {
+                if (!data.status) { if (confirm('Problem with Server.. Try Again??')) AbortComm(); }
+                else {
+                    $("#Textarea_id").text("");
+                    $("#Textarea_id").append(data.contnt);
+                }
+            }
+        });
         }
         $("#inbox_id").addClass("active");
 

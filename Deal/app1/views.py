@@ -138,9 +138,10 @@ def sendcomm(request):
     try:
         comm = request.GET.get('comm')
         msg = MessagesTable.objects.get(id = idid)
+        content = msg.content
         msg.comment = comm 
         msg.save()
-        data = {'status':True}
+        data = {'status':True,'contnt':content}
     except:
         data = {'status':False}
     return JsonResponse(data)
@@ -148,7 +149,16 @@ def sendcomm(request):
 def getcomm(request):
     try:
         msg = MessagesTable.objects.get(id = idid)
-        data = {'status':True, 'commnt':msg.comment}
+        data = {'status':True, 'commnt':msg.comment, 'contnt':msg.content}
+    except:
+        data = {'status':False}
+    return JsonResponse(data)
+def delcomm(request):
+    try:
+        msg = MessagesTable.objects.get(id = idid)
+        msg.comment = None
+        msg.save();
+        data = {'status':True, 'commnt':msg.comment,'contnt':msg.content}
     except:
         data = {'status':False}
     return JsonResponse(data)

@@ -18,4 +18,5 @@ urlpatterns = [
     url('ajlogout',views.logout, name = 'ajlogout'),
     url('ajsendcomm',views.sendcomm, name = 'ajsendcomm'),
     url('ajgetcomm',views.getcomm, name = 'ajgetcomm'),
+    url('ajdelcomm',views.delcomm, name = 'ajdelcomm'),
     ]
