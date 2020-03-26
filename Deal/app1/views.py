@@ -51,7 +51,7 @@ def home(request):
     inbox = MessagesTable.objects.filter(receiver = mainworker)
     outbox = MessagesTable.objects.filter(sender = mainworker)
     unread = MessagesTable.objects.filter(receiver = mainworker, isUnread = True)
-    member1 = TeamMembersTable.objects.get(member = mainworker)
+    member1 = allnames.get(member = mainworker)
     
     if request.method == 'POST' and 'SendMessageBtn' in request.POST:
         rw = request.POST.get('ReceiversList')
@@ -71,7 +71,7 @@ def home(request):
             message.isUnread = True
             message.isAccepted = False
             message.save()
-    return render(request,'app1/home.html',{'worker':mainworker,'n1':allreceivers2,'unreadcount':unread.count()})
+    return render(request,'app1/home.html',{'worker':member1,'n1':allreceivers2,'unreadcount':unread.count()})
 
 def inbox(request):
     unread = MessagesTable.objects.filter(receiver = mainworker, isUnread = True)
@@ -162,3 +162,4 @@ def delcomm(request):
     except:
         data = {'status':False}
     return JsonResponse(data)
+

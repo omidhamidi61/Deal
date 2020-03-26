@@ -20,13 +20,83 @@
           <tbody>
               <tr>
               <td><input id="Id_MessageTitle" name="MessageTitle"/></td>
-              <td><textarea cols="70" rows="10" id="Id_MessageContent" name="MessageContent"></textarea></td>
+              <td><textarea cols="70" rows="7" id="Id_MessageContent" name="MessageContent"></textarea></td>
               </tr>
           </tbody>
       </table>
-          <button id="Id_SendMessageBtn" type="submit" name="SendMessageBtn">Send Message</button>
+      <table id="1" onfocus="shift_function2({{worker}}" onmouseout="mouseout()" onmouseover="shift_function({{worker}})" style="border: 1px solid black; height:40px; border-collapse: collapse; width: 50%;">
+          <thead>
+              <tr>
+                  <th style="background-color: #4CAF50;color: white;"> DATE </th>
+                  <th style="background-color: #4CAF50;color: white;"> Day Of Week </th>
+                  <th style="background-color: #4CAF50;color: white;"> Day </th>
+                  <th style="background-color: #4CAF50;color: white;"> Night </th>
+              </tr>
+          </thead>
+          <tbody class="cellToAppend.addEventListener('click', clicked)">
+              <tr>
+                  <td style="border-bottom: 1px solid black;">1399/01/07</td>
+                  <td style="border-bottom: 1px solid black;">THU</td>
+                  <td style="border-bottom: 1px solid black;">4</td>
+                  <td style="border-bottom: 1px solid black;">1</td>
+              </tr>
+              <tr>
+                  <td>1399/01/08</td>
+                  <td>FRI</td>
+                  <td>3</td>
+                  <td>5</td>
+              </tr>
+              <tr>
+                  <td>1399/01/09</td>
+                  <td>SAT</td>
+                  <td>2</td>
+                  <td>4</td>
+              </tr>
+              <tr>
+                  <td>1399/01/10</td>
+                  <td>SUN</td>
+                  <td>1</td>
+                  <td>3</td>
+              </tr>
+              <tr>
+                  <td>1399/01/11</td>
+                  <td>MON</td>
+                  <td>5</td>
+                  <td>2</td>
+              </tr>
+              <tr>
+                  <td>1399/01/08</td>
+                  <td>FRI</td>
+                  <td>4</td>
+                  <td>1</td>
+              </tr>
+          </tbody>
+      </table>   
+      <button id="Id_SendMessageBtn" type="submit" name="SendMessageBtn">Send Message</button>
     </form>
     <script>
+        value1 = 0;
+        function shift_function(value) {
+            value1 = value;
+            $("#1 tbody tr td").each(function () {
+                if ($(this).text() == value) {
+                    $(this).css("color", "red");
+                    $(this).css("font-weight", "bold");
+                    $(this).css("cursor", "pointer");
+                }
+            });
+        }
+
+        $("#1 tbody tr td").click(function () {
+            if ($(this).text() == value1) alert("Correct");
+        });
+
+        function mouseout() {
+            $("#1 tbody tr td").each(function () {
+                $(this).css("color", "initial");
+                $(this).css("font-weight", "initial");
+            });
+        }
         $("#home_id").addClass("active");
         $("#p2_id").fadeOut(0);
         $("#p2_id").fadeIn(3000);
