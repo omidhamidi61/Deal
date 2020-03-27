@@ -75,12 +75,13 @@
       <button id="Id_SendMessageBtn" type="submit" name="SendMessageBtn">Send Message</button>
     </form>
     <script>
+        var shift = "";
         value1 = 0;
         function shift_function(value) {
             value1 = value;
             $("#1 tbody tr td").each(function () {
                 if ($(this).text() == value) {
-                    $(this).css("color", "red");
+                    $(this).css("color", "orange");
                     $(this).css("font-weight", "bold");
                     $(this).css("cursor", "pointer");
                 }
@@ -88,7 +89,17 @@
         }
 
         $("#1 tbody tr td").click(function () {
-            if ($(this).text() == value1) alert("Correct");
+            if ($(this).text() == value1) {
+                if ($(this).index() == 2) var ind = "Day";
+                else var ind = "Night";
+                var dat = $(this).parent().children().first().text();
+                var sum = dat + ':' + ind;
+                if (!shift.includes(sum)) {
+                    shift += sum + ',';
+                    $("#Id_MessageContent").append(sum + '\n');
+                }
+            }
+            
         });
 
         function mouseout() {
