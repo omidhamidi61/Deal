@@ -1,8 +1,12 @@
 ﻿{% extends 'app1/base.html' %}
 {%block main%}
    </br></br>
-    
-  <form method="post">
+
+    <div id="ToolTipDIv" style="width: 120px;  background-color: black;  color: #fff;
+  text-align: center;  border-radius: 6px;  padding: 5px 0;  position:absolute;  border-width: 5px;  border-style: solid;  
+  border-color: black transparent transparent transparent; z-index:1"></div>
+
+      <form method="post">
       {% csrf_token %}
       <label for="id_workerslist1" style="font:bold">Select Receiver</label>
         <select id="id_Receivers" name="ReceiversList">
@@ -24,21 +28,21 @@
               </tr>
           </tbody>
       </table>
-      <table id="1" onfocus="shift_function2({{worker}}" onmouseout="mouseout()" onmouseover="shift_function({{worker}})" style="border: 1px solid black; height:40px; border-collapse: collapse; width: 50%;">
+      <table id="1" onmouseout="mouseout()" onmouseover="shift_function({{worker}})" style="border: 1px solid black; height:40px; border-collapse: collapse; width: 50%;">
           <thead>
               <tr>
-                  <th style="background-color: #4CAF50;color: white;"> DATE </th>
-                  <th style="background-color: #4CAF50;color: white;"> Day Of Week </th>
-                  <th style="background-color: #4CAF50;color: white;"> Day </th>
-                  <th style="background-color: #4CAF50;color: white;"> Night </th>
+                  <th style="background-color: #4CAF50;color: white; width:20%"> DATE </th>
+                  <th style="background-color: #4CAF50;color: white; width:10%"> Day Of Week </th>
+                  <th style="background-color: #4CAF50;color: white; width:35%"> Day </th>
+                  <th style="background-color: #4CAF50;color: white; width:35%"> Night </th>
               </tr>
           </thead>
-          <tbody class="cellToAppend.addEventListener('click', clicked)">
+          <tbody id="tb_id">
               <tr>
-                  <td style="border-bottom: 1px solid black;">1399/01/07</td>
-                  <td style="border-bottom: 1px solid black;">THU</td>
-                  <td style="border-bottom: 1px solid black;">4</td>
-                  <td style="border-bottom: 1px solid black;">1</td>
+                  <td>1399/01/07</td>
+                  <td>THU</td>
+                  <td>4</td>
+                  <td>1</td>
               </tr>
               <tr>
                   <td>1399/01/08</td>
@@ -80,14 +84,21 @@
         function shift_function(value) {
             value1 = value;
             $("#1 tbody tr td").each(function () {
+                $(this).css("border", "1px solid black");
                 if ($(this).text() == value) {
-                    $(this).css("color", "orange");
+                    if (shift.includes($(this).parent().children().first().text())) $(this).css("color", "red");
+                    else $(this).css("color", "orange");
                     $(this).css("font-weight", "bold");
                     $(this).css("cursor", "pointer");
+                    $(this).mouseenter(function () {
+                        $("#ToolTipDIv").show('normal');
+                    });
+                    $(this).mouseleave(function (e) {
+                        $("#ToolTipDIv").hide();
+                    });
                 }
             });
         }
-
         $("#1 tbody tr td").click(function () {
             if ($(this).text() == value1) {
                 if ($(this).index() == 2) var ind = "Day";
@@ -98,8 +109,14 @@
                     shift += sum + ',';
                     $("#Id_MessageContent").append(sum + '\n');
                 }
+                else {
+                    shift = shift.replace((sum + ','), "");
+                    var t = $("#Id_MessageContent").text();
+                    t = t.replace(sum + '\n', "");
+                    $("#Id_MessageContent").text(t);
+                }
             }
-            
+
         });
 
         function mouseout() {
