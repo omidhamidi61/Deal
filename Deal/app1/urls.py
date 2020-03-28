@@ -19,4 +19,5 @@ urlpatterns = [
     url('ajsendcomm',views.sendcomm, name = 'ajsendcomm'),
     url('ajgetcomm',views.getcomm, name = 'ajgetcomm'),
     url('ajdelcomm',views.delcomm, name = 'ajdelcomm'),
+    url('ajsendshifts',views.sendshifts, name = 'ajsendshifts'),
     ]

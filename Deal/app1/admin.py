@@ -4,3 +4,4 @@ from app1 import models
 admin.site.register(models.WorkersTable)
 admin.site.register(models.MessagesTable)
 admin.site.register(models.TeamMembersTable)
+admin.site.register(models.ShiftsTable)

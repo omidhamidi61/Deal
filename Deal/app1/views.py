@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 import http
 import django
 import json
-from app1.models import WorkersTable , MessagesTable , TeamMembersTable
+from app1.models import WorkersTable , MessagesTable , TeamMembersTable , ShiftsTable
 from app1.forms import WorkersForm, MessagesForm
 from django.http import JsonResponse,HttpResponse
 from django.core import serializers
@@ -16,6 +16,8 @@ inbox = None
 outbox = None
 unread = None
 idid = None
+shifts = None
+canc = False
 
 def checkusername(request):
     ajax1 = request.GET.get('workerfullname')
@@ -52,26 +54,58 @@ def home(request):
     outbox = MessagesTable.objects.filter(sender = mainworker)
     unread = MessagesTable.objects.filter(receiver = mainworker, isUnread = True)
     member1 = allnames.get(member = mainworker)
-    
+    memteam = member1.teamnumber
     if request.method == 'POST' and 'SendMessageBtn' in request.POST:
-        rw = request.POST.get('ReceiversList')
-        if rw == None :
-            if member1.isSupervisor:
-                rw = allreceivers.filter(isSupervisor = True)
-            else:
-                if member1.isRated:
-                    rw = allreceivers.exclude(isSupervisor = True)
+        if canc == False:
+            rw = request.POST.get('ReceiversList')
+            if rw == None :
+                if member1.isSupervisor:
+                    rw = allreceivers.filter(isSupervisor = True)
+                    rw = rw.exclude(teamnumber = memteam + 2)
+                    rw = rw.exclude(teamnumber = memteam - 2)
+                    rw = rw.exclude(teamnumber = memteam + 3)
+                    rw = rw.exclude(teamnumber = memteam - 3)
+                else:
+                    if member1.isRated:
+                        rw = allreceivers.exclude(isSupervisor = True)
+                        rw = rw.exclude(teamnumber = memteam + 2)
+                        rw = rw.exclude(teamnumber = memteam - 2)
+                        rw = rw.exclude(teamnumber = memteam + 3)
+                        rw = rw.exclude(teamnumber = memteam - 3)
+                for r in rw:
+                    message=MessagesTable()
+                    message.sender = mainworker
+                    message.receiver= r.member
+                    message.title = request.POST.get('MessageTitle')
+                    message.content = request.POST.get('MessageContent')
+                    message.isUnread = True
+                    message.isAccepted = False
+                    message.save()
+                    for s in shifts.split(','):
+                        shift = ShiftsTable()
+                        shift.massagekey = message
+                        shift.date = s.split(':')[0]
+                        if s.split(':')[1] == 'Day': shift.isDay = True
+                        else: shift.isDay = False
+                        shift.save()
 
-        for r in rw:
-            message=MessagesTable()
-            message.sender = mainworker
-            message.receiver= r.member
-            message.title = request.POST.get('MessageTitle')
-            message.content = request.POST.get('MessageContent')
-            message.isUnread = True
-            message.isAccepted = False
-            message.save()
-    return render(request,'app1/home.html',{'worker':member1,'n1':allreceivers2,'unreadcount':unread.count()})
+            else:
+                message=MessagesTable()
+                message.sender = mainworker
+                message.receiver= WorkersTable.objects.get(name = rw)
+                message.title = request.POST.get('MessageTitle')
+                message.content = request.POST.get('MessageContent')
+                message.isUnread = True
+                message.isAccepted = False
+                message.save()
+                for s in shifts.split(','):
+                    shift = ShiftsTable()
+                    shift.massagekey = message
+                    shift.date = s.split(':')[0]
+                    if s.split(':')[1] == 'Day': shift.isDay = True
+                    else: shift.isDay = False
+                    shift.save()
+    return render(request,'app1/home.html',{'worker':mainworker,'member':member1,'n1':allreceivers2,'unreadcount':unread.count()})
 
 def inbox(request):
     unread = MessagesTable.objects.filter(receiver = mainworker, isUnread = True)
@@ -102,7 +136,7 @@ def checkreceivermails(request):
 
 def unreadmessages(request):
     unread = MessagesTable.objects.filter(receiver = mainworker, isUnread = True)
-    return render (request,"app1/unreadmessages.html",{'unreadmessages':unread , 'mainworker':mainworker , 'unreadcount':unread.count() , 'worker':mainworker})
+    return render (request,"app1/unreadmessages.html",{'unreadmessages':unread , 'unreadcount':unread.count() , 'worker':mainworker})
 
 def showcontent(request):
     global idid
@@ -128,7 +162,6 @@ def deal(request):
 def logout(request):
     try:
         mainworker = None
-        print(mainworker)
         data = {'status':True}
     except:
         data = {'status':False}
@@ -163,3 +196,14 @@ def delcomm(request):
         data = {'status':False}
     return JsonResponse(data)
 
+def sendshifts(request):
+    global canc
+    canc = True
+    try:
+        global shifts
+        shifts = request.GET.get('shifts')
+        canc = False
+        data = {'status': True}
+    except:
+        data = {'status':False}
+    return JsonResponse

@@ -28,7 +28,7 @@
               </tr>
           </tbody>
       </table>
-      <table id="1" onmouseout="mouseout()" onmouseover="shift_function({{worker}})" style="border: 1px solid black; height:40px; border-collapse: collapse; width: 50%;">
+      <table id="1" onmouseout="mouseout()" onmouseover="shift_function({{member.teamnumber}})" style="border: 1px solid black; height:40px; border-collapse: collapse; width: 50%;">
           <thead>
               <tr>
                   <th style="background-color: #4CAF50;color: white; width:20%"> DATE </th>
@@ -125,6 +125,17 @@
                 $(this).css("font-weight", "initial");
             });
         }
+        $("#Id_SendMessageBtn").click(function () {
+            $.ajax({
+                url: '../ajsendshifts',
+                data: { 'shifts': shift.slice(0,-1) },
+                dataType: 'json',
+                success: function (data) {
+                    if (!data.status) alert('Problem with Server...');
+                    //else {}
+                }
+            });
+        });
         $("#home_id").addClass("active");
         $("#p2_id").fadeOut(0);
         $("#p2_id").fadeIn(3000);

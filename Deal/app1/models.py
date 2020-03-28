@@ -25,19 +25,14 @@ class MessagesTable(models.Model):
 class TeamMembersTable(models.Model):
     member = models.ForeignKey(WorkersTable, related_name='workersTable3', on_delete = models.CASCADE , null = True)
     teamnumber = models.IntegerField(null = False)
-    #supervisor = models.ForeignKey(WorkersTable,related_name='TeamMembersTable',on_delete = models.CASCADE)
     isRated = models.BooleanField(null = False)
     isSupervisor = models.BooleanField(null = False)
 
-    def __str__(self):
-        return str(self.teamnumber)
-
-#class ShiftsTable(models.Model):
-#    name = models.CharField(max_length = 20)
-#    type = models.CharField(max_length = 20)
-#    startTime= models.TimeField()
-#    endTime = models.TimeField()
-
+class ShiftsTable(models.Model):
+    massagekey = models.ForeignKey(MessagesTable,null = True, on_delete=models.CASCADE)
+    date = models.CharField(max_length = 10 , default = None)
+    isDay = models.BooleanField(default = True)
+    
 #class ShiftLogTable(models.Model):
 #    team = models.ForeignKey(TeamMembersTable, on_delete=models.CASCADE)
 #    shift = models.ForeignKey(ShiftsTable, on_delete=models.CASCADE)
